@@ -51,7 +51,7 @@ Add SSH key
 ssh-keygen enter enter enter
 ssh-copy-id azadmin@anode1.labs.com
 login for the first time
-===installation
+===installation of anisble=====
 ssh azadmin@anode1.labs.com
 sudo apt-get install software-properties-common
 sudo apt-add-repository ppa:ansible/ansiblesud
@@ -61,17 +61,18 @@ sudo apt get install ansible
 cd /etc/ansible/
 anisble.cfg
 not required it was permission issue [anisble-config init --disabled -t all > anisble.cfg]
-take over permission - sudo chown -R azadmin:azadmin ansible/
+take over permission of directory - sudo chown -R azadmin:azadmin ansible/
+#===================
+# edit host file
+[ng1] #group name
+node1.labs.com ansible-connection=ssh #nodes
 
-edit host file
-[ng1]
-node1.labs.com ansible-connection=ssh
-
-[sg1]
-aserver.labs.com ansible-connection=local
-To list
+[sg1] #group name
+aserver.labs.com ansible-connection=local #nodes
+#===================
+To list all host 
 anisble --list-host all
-===================
+#===================
 To ping 
 ansible -m ping all 
 ===
