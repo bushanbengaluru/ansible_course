@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "ansible-course"
+version = "0.1.0"
+description = "All learnings from Ansible course"
+authors = ["Bushan bengaluru"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
