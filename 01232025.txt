@@ -1,0 +1,81 @@
+By using Ansible we can create and push script to many devices
+ex: write script to create a file and push to 100 devices at a time
+
+Ansible/salt ==> push architecture [ it will keep on asking for updates on chef server]
+chef/puppet ==> pull architecture
+
+Chef server - will hold cook books > you can create file / install software / configure devices
+Ansible/salt
+    multple nodes
+    node1 node2
+    chef agent will be installed
+
+Chef/puppet:
+    Ansible Server 
+    modules
+        ping
+        file
+        copy
+    Ansible server>
+    > Playbook
+        >This will push to devices
+/etc/anisble - path where ansible will be installed, this will contains ansible.cfg
+
+host file [ inventory file]
+or if you have another host file, you can mention in anisble.cfg
+
+Linux server, connect using ssh, file module
+windows server, winrm will use to connect and execute
+
+CI/CD > it will be in last pipline
+To build infrastructure Terraform used for provisioning the infrastructure
+Create anisble server
+**
+portal.azure.com
+activate using mobile
+**
+===create virtual machines == linux - ubuntu
+    aserver
+    anode1
+create private dns server for fqdn work private domain name
+it will be internal - labs.com
+In Azure > 
+    Create private DNS Zone
+DNS Management >
+Recordsets > Host A record
+aserver.labs.com - 10.0.0.4
+anode1.labs.com - 10.0.0.5
+Add Virtual network link - Add labs.com
+=== add key for password less login
+Add SSH key
+ssh-keygen enter enter enter
+ssh-copy-id azadmin@anode1.labs.com
+login for the first time
+===installation
+ssh azadmin@anode1.labs.com
+sudo apt-get install software-properties-common
+sudo apt-add-repository ppa:ansible/ansiblesud
+sudo apt get update
+sudo apt get install ansible
+
+cd /etc/ansible/
+anisble.cfg
+not required it was permission issue [anisble-config init --disabled -t all > anisble.cfg]
+take over permission - sudo chown -R azadmin:azadmin ansible/
+
+edit host file
+[ng1]
+node1.labs.com ansible-connection=ssh
+
+[sg1]
+aserver.labs.com ansible-connection=local
+To list
+anisble --list-host all
+===================
+To ping 
+ansible -m ping all 
+===
+
+
+
+
