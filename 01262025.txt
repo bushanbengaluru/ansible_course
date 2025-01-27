@@ -1,0 +1,65 @@
+Krishna Reddy:
+Test login to ssh aserver and anode1 without password
+
+modules in Ansible- search in docs.ansible.com - usage: -m
+    ping module
+    file_copy module
+-----------------------
+option 1: adhoc commands
+    ansible -m command -a "ls" ng1
+        it will login and run ls command and gets list of files in home directory
+option 2: playbooks
+--
+Created some more nodes to target group
+--
+For copying file
+ansible ng1 -m copy -a "src=/etc/ansible/hosts dest=/tmp/hosts"
+
+ansible ng1 -m file -a "dest=/home/azadmin/new1 mode=777 owner=azadmin group=azadmin state=directory" #we can also give state=file for creating files
+
+ansible -m command -a "ls" ng1
+
+ansible ng1 -m shell -a 'df -h /dev/sda1' --become #--become is nothing but root permission
+
+ansible ng1 -m file -a "dest=/home/azadmin/new1 state=absent" - delete the directory
+ansible ng1 -m file -a "dest=/home/azadmin/new1 state=present" - create the directory - software
+state=touch" file
+
+pupose of setup, we will get all data of nodes
+ansible ng1 -m setup # get all details of each nodes in json data
+ngx [for web server] can be installed by using this data 
+
+os family debian use apt
+os family of centos use  yum
+
+EXAMPLE: ansible ng1 -m apt -a 'name=nginx state=latest' --become # automaticall port 80 is allowed
+    cd /var/www/html - information can be 
+To start: ansible ng1 -m service -a "name=nginx state=stopped" --become
+To stop: ansible ng1 -m service -a "name=nginx state=stopped" --become
+
+ansible ng1 -m apt -a 'name=nginx state=absent purge=yes' --become
+#apt for debian
+#yum for centos
+
+configuration management tool, from centralized server, we can push to nodes
+----
+yaml - 
+key value pair
+example:
+name = krishna
+test.yaml / test/yml # we can use both
+
+person: 
+    name: krishna
+    city: hyd
+    occupation: engineer
+    hobbies: #list
+     - music
+     - dance
+     - circket
+    friends: #multiple list - comments for #
+    - name: krishna1
+      city: hyd
+    - name: krishna2
+      city: hyd
+
