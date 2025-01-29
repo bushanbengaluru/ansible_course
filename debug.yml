@@ -1,0 +1,32 @@
+---
+hosts: ng1
+become: true
+tasks: #to pint hello message
+debug:
+  - name: task1
+    msg: hello task1 executed..!!
+  - name: task2
+    msg: Hello task2 executed..
+---
+hosts: all
+become: true
+tasks: #to create directory and file
+- name: Create directory
+  file: path=/home/azadmin/temp1234 state=directory mode=0755 owner=azadmin group=azadmin
+- name: Create file
+  file: path=/home/azadmin/temp1234/test.txt state=touch mode=0644 owner=azadmin group=azadmin
+
+hosts: ng1
+become: true
+gather_facts: false
+tasks: #to download nginx
+- name: Download Tomcat
+  get_url: url=https://www-us.apache.org/dist/tomcat/tomcat-9/v9.0.31/bin/apache-tomcat-9.0.31.tar.gz dest=/home/azadmin/apache-tomcat-9.0.31.tar.gz
+    name: Extract Tomcat
+    command: tar xvf apache-tomcat-10.1.34.tar.gz -C /home/azadmin
+  - name: Move the Tomcat directory
+    command: mv /home/azadmin/apache-tomcat-10.1.34 /home/azadmin/tomcat
+  - name: Change the permissions
+    file: path=/home/azadmin/tomcat state=directory mode=0755 owner=azadmin group=azadmin recurse=yes
+  
+  

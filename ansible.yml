@@ -1,0 +1,16 @@
+--- # start of the filecan also be used as document separator
+- name:
+  hosts: anode.labs.com #host name
+  become: true #become root permission
+  tasks:
+    - name: Install apache2
+      apt: #module name
+        name: nginx #package name
+        state: present #to install the package
+      service:
+        name: nginx
+        state: started
+        enabled: true
+  ---
+
+

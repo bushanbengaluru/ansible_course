@@ -22,7 +22,7 @@ ansible -m command -a "ls" ng1
 ansible ng1 -m shell -a 'df -h /dev/sda1' --become #--become is nothing but root permission
 
 ansible ng1 -m file -a "dest=/home/azadmin/new1 state=absent" - delete the directory
-ansible ng1 -m file -a "dest=/home/azadmin/new1 state=present" - create the directory - software
+ansible ng1 -m file -a "dest=/home/azadmin/new1 state=present" - Install the directory - software
 state=touch" file
 
 pupose of setup, we will get all data of nodes
@@ -37,6 +37,8 @@ EXAMPLE: ansible ng1 -m apt -a 'name=nginx state=latest' --become # automaticall
 To start: ansible ng1 -m service -a "name=nginx state=stopped" --become
 To stop: ansible ng1 -m service -a "name=nginx state=stopped" --become
 
+state=present - install package
+state=absent - uninstall package
 ansible ng1 -m apt -a 'name=nginx state=absent purge=yes' --become
 #apt for debian
 #yum for centos

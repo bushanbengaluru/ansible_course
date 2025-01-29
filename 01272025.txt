@@ -1,0 +1,49 @@
+yaml
+
+---
+hosts: ng1
+become: TRUE
+tasks:
+ - name: task1
+ debug:
+   msg: "hello task1 executed..!!"
+ - name: task2
+ msg: "Hello task2 executed.."
+
+
+ command to run ansible playbook is
+
+ ansible-playbook debug.yml
+ variables
+ ---
+ hosts: ng1
+ vars:
+    greeting1: Hello world!
+tasks:
+ - name: Ansible Basic
+ debug:
+  msg: "{{ greeting }}"
+
+  ---
+  hosts: ng1
+  vars:
+    continents:
+        - africa
+        - asia
+        - australia
+        - north america
+        - south america
+    debug:
+        msg: "{{ continents[1] }}"
+        with_items: #to list all items in list
+         - "{{ continents }}"
+    
+    create multiple files
+    ---
+    hosts: ng1
+    tasks:
+    vars:
+        files_to_create:
+         - bushan.log
+          - vssoft.log
+          - devops.txt
