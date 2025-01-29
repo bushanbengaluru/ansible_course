@@ -1,0 +1,135 @@
+---
+- host:ng1
+  task:
+  - name: ansible create multiple files example
+    file:
+      path: "{{ item.location}}"
+      state: touch
+      mode: "{{ item.mode}}"
+    with_items:
+    - { location: 'file1.txt', mode '566' }
+    - { location: 'file2.txt', mode '700' }
+
+---# This will install 3 apps
+- hosts: ng1
+become: TRUE
+vars:
+sw: [tree, git, maven] # tree, apache maven
+
+tasks:
+- name: Anisble loop example
+apt:
+  name: "{{ item }}"
+  state: present
+with_items:
+- "{{ sw }}"
+
+---
+host: ng1
+vars:
+  Tree:
+    k1: 'v1'
+    k2: 'v2'
+    k3: 'v3'
+
+tasks:
+- name: Anisble list variables
+  debug:
+    msg: "{{ Tree.k1 }}"
+
+anisble -m setup ng1 # setup means we get all information about the node
+
+---
+- hosts: ng1
+tasks:
+ - name: querying information from setup file
+   debug:
+   msg: "{{ anisble_os_family }}"
+   #** we dont need to call the inbuilt module name, automatically using debug and msg we can query the key, so we can get values
+
+---
+task:
+ - name: java install redhat
+ yum:
+   name: java-1.8.0
+   state: present
+become: yes
+   when: anisble_os_family == "Debian"
+ - name: java install on ubuntu
+  apt:
+    name: java-1.8.0
+    state: present
+  become: yes
+    when: anisble_os_family == "Redhat"
+===========
+tags:
+  name : task1
+  debug:
+    msg: "task1 executed"
+    tags: "tag1"
+      name : task1
+  debug:
+    msg: "task2 executed"
+    tags: "tag1"  
+  name : task2
+  debug:
+    msg: "task1 executed"
+    tags: "tag1"
+
+ansible-playbook pb9.yml --tags "tag2, tag4"
+
+=====
+notify: hd11
+handlers: #it will execute only when there is changes in node
+  - name: hd11
+    debug:
+      msg: "hd11 was executed"
+
+
+============
+WINDOWS ENVIRONMENT
+for Linux machine, it will be connected using ssh
+for windows machine, it will be connected using winrm
+
+linux machine:
+pip list installed
+pywinrm # this is used to communicate from ansible server to windows server
+
+/etc/ansible
+add host entry
+
+[winrg]
+10.0.0.6 
+[winrg:vars]
+ansible_connection=winrm
+anisble_user=azadmin
+ansible_password=P@ssw0rd123
+anisble_winrm_server_cert_validation=ignore
+
+Command:
+ansible -m win_ping winrg
+
+on windows server:
+from Browser > download ansible-documentation/ ConfigureRemotingForAnsible.ps1
+
+copy to C:\
+Open Powershell > Run as admin > get-ExecutionPolicy
+Set-ExecutionPolicy Unrestricted
+Tls12
+
+cd .\anisble\
+.\ConfigureRemotingForAnsible.ps1
+
+Check services > windown Remote Management Services
+===========
+
+From Ansible server run
+ansible -m win_ping winrg
+10.0.06 | sucess => {
+    "changed": false 
+}
+===
+Next class roles
+instead of raw code, we can call role
+
+
