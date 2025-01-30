@@ -1,0 +1,69 @@
+Ansible roles is for reusable tasks
+playbook > host > which inventory > task > module > state
+
+Ansible will have
+ > task
+ > module
+ > state
+
+ example: nginx role
+    task
+    module
+    state
+
+Instead or writing everything in playbook, just call role
+
+mkdir aroles
+cd aroles
+ansible-galaxy init nginxrole
+
+tree .
+nginxrole
+    -readme.md 
+    defaults
+        -
+====Requirement - install nginx, change name, state, add header for index.html
+In galaxy-galaxy > all ready roles are there
+=-- example for ready roles
+to install
+ansible-glaxy role install vmaurya2008.apache
+other example
+hub.docker.com > repository
+=========
+vi tasks/install.yml
+--
+
+-name: installing ngnix server
+  apt:
+    name: ngnix
+    state: present
+vi tasks/config.yml > will have how to copy index.html
+==========
+How to call roles in playbook?
+
+roles:
+- nginxrole
+where to create roles?
+/etc/ansible/roles
+
+===============
+Create resource group using yml - createrg.yml
+---
+-hosts: localhost
+  connection: localhost
+  task:
+    - name: Create a resource group
+      azure_rm_resourcegroup:
+        name: krishnaRG
+        state: absent
+Run the yml directly in portal.azure.com > shell
+ansible-playbook ./createrg.yml [./ because its powershell]
+===
+There are a lot of playbooks available for cloud deployments
+
+example:
+https://github.com/Azure-Samples/ansible-playbooks
+
+Majorly terraform is used for cloud deployments, but Ansible has ability to cloud deployments
+
+
